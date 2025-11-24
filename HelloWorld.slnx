@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/HelloWorld.Application/HelloWorld.Application.csproj" />
+    <Project Path="src/HelloWorld.Domain/HelloWorld.Domain.csproj" />
+    <Project Path="src/HelloWorld.Infrastructure/HelloWorld.Infrastructure.csproj" />
+    <Project Path="src/HelloWorld.WebAPI/HelloWorld.WebAPI.csproj" />
+  </Folder>
+  <Folder Name="/test/" />
+</Solution>
