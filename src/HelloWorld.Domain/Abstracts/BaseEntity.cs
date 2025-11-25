@@ -9,7 +9,7 @@ namespace HelloWorld.Domain.Abstracts
 {
     public abstract class BaseEntity
     {
-        public string Id { get; set; } = default!;
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
         public string? CreatedBy { get; set; } = default!;
         public DateTimeOffset? UpdatedAt { get; set; }

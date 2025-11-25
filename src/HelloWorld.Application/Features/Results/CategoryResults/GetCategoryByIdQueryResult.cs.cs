@@ -10,5 +10,6 @@ namespace HelloWorld.Application.Features.Results.CategoryResults
     {
         public string Id { get; set; }
         public string CategoryName { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using HelloWorld.Application.Features.Queries.CategoryQueries;
 using HelloWorld.Application.Features.Results.CategoryResults;
+using HelloWorld.Application.Interfaces;
+using HelloWorld.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,11 +11,17 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.Application.Features.Handlers.CategoryHandlers
 {
-    public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, GetCategoryByIdQueryResult>
+    public class GetCategoryByIdQueryHandler(IRepository<Category> _categoryRepository) : IRequestHandler<GetCategoryByIdQuery, GetCategoryByIdQueryResult>
     {
-        public Task<GetCategoryByIdQueryResult> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
+        public async Task<GetCategoryByIdQueryResult> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var category = await _categoryRepository.GetByIdAsync(request.Id);
+            return new GetCategoryByIdQueryResult
+            {
+                Id = category.Id,
+                CategoryName = category.CategoryName,
+                Status = category.Status.ToString()
+            };
         }
     }
 }

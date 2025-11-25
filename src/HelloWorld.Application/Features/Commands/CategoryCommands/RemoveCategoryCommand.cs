@@ -9,9 +9,9 @@ namespace HelloWorld.Application.Features.Commands.CategoryCommands
 {
     public class RemoveCategoryCommand : IRequest
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
-        public RemoveCategoryCommand(int id)
+        public RemoveCategoryCommand(string id)
         {
             Id = id;
         }

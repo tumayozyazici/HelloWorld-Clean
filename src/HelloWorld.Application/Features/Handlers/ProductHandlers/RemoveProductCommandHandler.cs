@@ -1,4 +1,6 @@
 ﻿using HelloWorld.Application.Features.Commands.ProductCommands;
+using HelloWorld.Application.Interfaces;
+using HelloWorld.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.Application.Features.Handlers.ProductHandlers
 {
-    public class RemoveProductCommandHandler : IRequestHandler<RemoveProductCommand>
+    public class RemoveProductCommandHandler(IRepository<Product> _productRepository) : IRequestHandler<RemoveProductCommand>
     {
-        public Task<Unit> Handle(RemoveProductCommand request, CancellationToken cancellationToken)
+        public async Task Handle(RemoveProductCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _productRepository.DeleteAsync(request.Id);
         }
     }
 }

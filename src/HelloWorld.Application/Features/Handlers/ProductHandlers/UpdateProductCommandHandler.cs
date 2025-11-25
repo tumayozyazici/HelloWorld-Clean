@@ -1,4 +1,6 @@
 ﻿using HelloWorld.Application.Features.Commands.ProductCommands;
+using HelloWorld.Application.Interfaces;
+using HelloWorld.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,11 +10,16 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.Application.Features.Handlers.ProductHandlers
 {
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
+    public class UpdateProductCommandHandler(IRepository<Product> _productRepository) : IRequestHandler<UpdateProductCommand>
     {
-        public Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var product = await _productRepository.GetByIdAsync(request.Id);
+            product.ProductName = request.ProductName;
+            product.Price = request.Price;
+            product.InStock = request.InStock;
+            product.CategoryId = request.CategoryId;
+            await _productRepository.UpdateAsync(product);
         }
     }
 }

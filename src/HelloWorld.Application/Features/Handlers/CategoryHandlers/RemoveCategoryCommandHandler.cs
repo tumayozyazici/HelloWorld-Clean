@@ -1,4 +1,6 @@
 ﻿using HelloWorld.Application.Features.Commands.CategoryCommands;
+using HelloWorld.Application.Interfaces;
+using HelloWorld.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.Application.Features.Handlers.CategoryHandlers
 {
-    public class RemoveCategoryCommandHandler : IRequestHandler<RemoveCategoryCommand>
+    public class RemoveCategoryCommandHandler(IRepository<Category> _categoryRepository) : IRequestHandler<RemoveCategoryCommand>
     {
-        public Task<Unit> Handle(RemoveCategoryCommand request, CancellationToken cancellationToken)
+        public async Task Handle(RemoveCategoryCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _categoryRepository.DeleteAsync(request.Id);
         }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HelloWorld.Infrastructure.Migrations
 {
     [DbContext(typeof(HelloWorldDbContext))]
-    [Migration("20251124181901_mg1")]
+    [Migration("20251125162005_mg1")]
     partial class mg1
     {
         /// <inheritdoc />
@@ -66,7 +66,6 @@ namespace HelloWorld.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -111,9 +110,7 @@ namespace HelloWorld.Infrastructure.Migrations
                 {
                     b.HasOne("HelloWorld.Domain.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
                 });

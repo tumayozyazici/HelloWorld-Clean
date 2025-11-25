@@ -57,6 +57,7 @@ namespace HelloWorld.Infrastructure.Repositories
 
         public async Task UpdateAsync(T entity)
         {
+            entity.Status = EntityStatus.Updated;
             _context.Set<T>().Update(entity);
             await _context.SaveChangesAsync();
         }

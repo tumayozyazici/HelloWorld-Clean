@@ -14,5 +14,7 @@ namespace HelloWorld.Application.Features.Commands.ProductCommands
         public decimal Price { get; set; }
         public int InStock { get; set; }
         public string? CategoryId { get; set; }
+        public string Status { get; set; }
+
     }
 }
