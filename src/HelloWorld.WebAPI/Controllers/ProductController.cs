@@ -9,11 +9,11 @@ namespace HelloWorld.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductControllers : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public ProductControllers(IMediator mediator)
+        public ProductController(IMediator mediator)
         {
             _mediator = mediator;
         }
