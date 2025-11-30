@@ -13,7 +13,7 @@ namespace HelloWorld.Application.Features.Commands.UserCommands
         public string FirstName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
         public DateTimeOffset BirthDate { get; set; }
         public string? BillingAdress { get; set; }
         public string? ShippingAdress { get; set; }

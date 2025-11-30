@@ -22,7 +22,6 @@ namespace HelloWorld.Application.Features.Handlers.UserHandlers
                 FirstName = user.FirstName,
                 UserName = user.UserName,
                 Email = user.Email,
-                PasswordHash = user.PasswordHash,
                 BirthDate = user.BirthDate,
                 BillingAdress = user.BillingAdress,
                 ShippingAdress = user.ShippingAdress,

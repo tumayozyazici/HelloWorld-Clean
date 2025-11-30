@@ -14,6 +14,12 @@ namespace HelloWorld.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.HasKey(c => c.Id);
+
+            builder.HasData(
+                new Category { Id = "1", CategoryName = "Elektronik" },
+                new Category { Id = "2", CategoryName = "Kitap" },
+                new Category { Id = "3", CategoryName = "Giyim" }
+            );
         }
     }
 }

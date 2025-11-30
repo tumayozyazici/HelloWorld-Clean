@@ -18,7 +18,7 @@ namespace HelloWorld.Application.Features.Handlers.UserHandlers
             user.FirstName = request.FirstName;
             user.UserName = request.UserName;
             user.Email = request.Email;
-            user.PasswordHash = request.PasswordHash;
+            user.SetPassword(request.Password);
             user.BirthDate = request.BirthDate;
             user.BillingAdress = request.BillingAdress;
             user.ShippingAdress = request.ShippingAdress;
