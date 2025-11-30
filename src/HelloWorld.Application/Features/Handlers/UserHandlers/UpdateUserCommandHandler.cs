@@ -1,6 +1,7 @@
 ﻿using HelloWorld.Application.Features.Commands.UserCommands;
 using HelloWorld.Application.Interfaces;
 using HelloWorld.Domain.Entities;
+using Mapster;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,9 @@ namespace HelloWorld.Application.Features.Handlers.UserHandlers
         public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByIdAsync(request.Id);
-            user.FirstName = request.FirstName;
-            user.UserName = request.UserName;
-            user.Email = request.Email;
+            user=request.Adapt<User>();
             user.SetPassword(request.Password);
-            user.BirthDate = request.BirthDate;
-            user.BillingAdress = request.BillingAdress;
-            user.ShippingAdress = request.ShippingAdress;
+            
             await _userRepository.UpdateAsync(user);
         }
     }

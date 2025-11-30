@@ -2,6 +2,7 @@
 using HelloWorld.Application.Features.Results.ProductResults;
 using HelloWorld.Application.Interfaces;
 using HelloWorld.Domain.Entities;
+using Mapster;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -16,15 +17,7 @@ namespace HelloWorld.Application.Features.Handlers.ProductHandlers
         public async Task<GetProductByIdQueryResult> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var product =  await _productRepository.GetByIdAsync(request.Id);
-            return new GetProductByIdQueryResult
-            {
-                Id = product.Id,
-                ProductName = product.ProductName,
-                Price = product.Price,
-                InStock = product.InStock,
-                CategoryId = product.CategoryId,
-                Status = product.Status.ToString()
-            };
+            return product.Adapt<GetProductByIdQueryResult>();
         }
     }
 }

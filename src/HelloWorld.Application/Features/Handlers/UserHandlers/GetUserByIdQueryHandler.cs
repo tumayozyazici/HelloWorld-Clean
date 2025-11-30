@@ -2,6 +2,7 @@
 using HelloWorld.Application.Features.Results.UserResults;
 using HelloWorld.Application.Interfaces;
 using HelloWorld.Domain.Entities;
+using Mapster;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,7 @@ namespace HelloWorld.Application.Features.Handlers.UserHandlers
         public async Task<GetUserByIdQueryResult> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByIdAsync(request.Id);
-            return new GetUserByIdQueryResult
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                UserName = user.UserName,
-                Email = user.Email,
-                BirthDate = user.BirthDate,
-                BillingAdress = user.BillingAdress,
-                ShippingAdress = user.ShippingAdress,
-                Status = user.Status.ToString()
-            };
+            return user.Adapt<GetUserByIdQueryResult>();
         }
     }
 }

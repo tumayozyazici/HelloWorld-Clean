@@ -2,6 +2,7 @@
 using HelloWorld.Application.Features.Results.CategoryResults;
 using HelloWorld.Application.Interfaces;
 using HelloWorld.Domain.Entities;
+using Mapster;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,7 @@ namespace HelloWorld.Application.Features.Handlers.CategoryHandlers
         public async Task<GetCategoryByIdQueryResult> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
             var category = await _categoryRepository.GetByIdAsync(request.Id);
-            return new GetCategoryByIdQueryResult
-            {
-                Id = category.Id,
-                CategoryName = category.CategoryName,
-                Status = category.Status.ToString()
-            };
+            return category.Adapt<GetCategoryByIdQueryResult>();
         }
     }
 }

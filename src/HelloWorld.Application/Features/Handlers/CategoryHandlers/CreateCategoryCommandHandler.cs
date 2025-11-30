@@ -1,6 +1,7 @@
 ﻿using HelloWorld.Application.Features.Commands.CategoryCommands;
 using HelloWorld.Application.Interfaces;
 using HelloWorld.Domain.Entities;
+using Mapster;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace HelloWorld.Application.Features.Handlers.CategoryHandlers
         public async Task Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
             Category category = new();
-            category.CategoryName = request.CategoryName;
+            category = request.Adapt<Category>();
             await _categoryRepository.CreateAsync(category);
         }
     }

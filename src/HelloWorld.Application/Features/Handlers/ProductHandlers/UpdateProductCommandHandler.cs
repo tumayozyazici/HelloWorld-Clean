@@ -1,6 +1,7 @@
 ﻿using HelloWorld.Application.Features.Commands.ProductCommands;
 using HelloWorld.Application.Interfaces;
 using HelloWorld.Domain.Entities;
+using Mapster;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,7 @@ namespace HelloWorld.Application.Features.Handlers.ProductHandlers
         public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var product = await _productRepository.GetByIdAsync(request.Id);
-            product.ProductName = request.ProductName;
-            product.Price = request.Price;
-            product.InStock = request.InStock;
-            product.CategoryId = request.CategoryId;
+            product=request.Adapt<Product>();
             await _productRepository.UpdateAsync(product);
         }
     }

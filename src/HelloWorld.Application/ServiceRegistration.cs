@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using HelloWorld.Application.Mapping;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ namespace HelloWorld.Application
             {
                 cfg.RegisterServicesFromAssembly(typeof(ServiceRegistration).Assembly);
             });
+
+            MapsterConfiguration.Configure();
+
             return service;
         }
     }
