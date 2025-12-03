@@ -18,6 +18,7 @@ namespace HelloWorld.Application.Features.Handlers.CategoryHandlers
             Category category = new();
             category = request.Adapt<Category>();
             await _categoryRepository.CreateAsync(category);
+            await _categoryRepository.SaveChangesAsync();
         }
     }
 }

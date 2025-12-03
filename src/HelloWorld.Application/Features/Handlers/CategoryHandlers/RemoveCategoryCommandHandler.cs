@@ -15,6 +15,7 @@ namespace HelloWorld.Application.Features.Handlers.CategoryHandlers
         public async Task Handle(RemoveCategoryCommand request, CancellationToken cancellationToken)
         {
             await _categoryRepository.DeleteAsync(request.Id);
+            await _categoryRepository.SaveChangesAsync();
         }
     }
 }

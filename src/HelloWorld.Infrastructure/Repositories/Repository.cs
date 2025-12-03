@@ -24,7 +24,11 @@ namespace HelloWorld.Infrastructure.Repositories
         public async Task CreateAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
-            await _context.SaveChangesAsync();
+        }
+
+        public async Task CreateRangeAsync(IEnumerable<T> entities)
+        {
+            await _context.Set<T>().AddRangeAsync(entities);
         }
 
         public async Task DeleteAsync(string id)
@@ -32,7 +36,20 @@ namespace HelloWorld.Infrastructure.Repositories
             var entity= await _context.Set<T>().FindAsync(id);
             entity!.Status = EntityStatus.Deleted;
             _context.Set<T>().Update(entity);
-            await _context.SaveChangesAsync();
+        }
+
+        public void DeleteRange(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+            {
+                entity.Status = EntityStatus.Deleted;
+            }
+                _context.Set<T>().UpdateRange(entities);
+        }
+
+        public async Task<IEnumerable<T>> GetAllActivesAsync()
+        {
+            return await _context.Set<T>().Where(e => e.Status != EntityStatus.Deleted).ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
@@ -55,11 +72,15 @@ namespace HelloWorld.Infrastructure.Repositories
             return await _context.Set<T>().Where(filter).ToListAsync();
         }
 
+        public async Task SaveChangesAsync()
+        {
+           await _context.SaveChangesAsync();
+        }
+
         public async Task UpdateAsync(T entity)
         {
             entity.Status = EntityStatus.Updated;
             _context.Set<T>().Update(entity);
-            await _context.SaveChangesAsync();
         }
     }
 }

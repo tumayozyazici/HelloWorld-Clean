@@ -12,10 +12,14 @@ namespace HelloWorld.Application.Interfaces
     {
         Task<T> GetByIdAsync(string id);
         Task<IEnumerable<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllActivesAsync();
         Task<T> GetByFilterASync(Expression<Func<T, bool>> filter);
         Task<IEnumerable<T>> GetListByFilterAsync(Expression<Func<T, bool>> filter);
         Task CreateAsync(T entity);
+        Task CreateRangeAsync(IEnumerable<T> entities);
         Task UpdateAsync(T entity);
         Task DeleteAsync(string id);
+        void DeleteRange(IEnumerable<T> entities);
+        Task SaveChangesAsync();
     }
 }

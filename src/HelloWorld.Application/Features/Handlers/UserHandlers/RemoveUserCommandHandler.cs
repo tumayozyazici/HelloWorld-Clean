@@ -15,6 +15,7 @@ namespace HelloWorld.Application.Features.Handlers.UserHandlers
         public async Task Handle(RemoveUserCommand request, CancellationToken cancellationToken)
         {
             await _userRepository.DeleteAsync(request.Id);
+            await _userRepository.SaveChangesAsync();
         }
     }
 }

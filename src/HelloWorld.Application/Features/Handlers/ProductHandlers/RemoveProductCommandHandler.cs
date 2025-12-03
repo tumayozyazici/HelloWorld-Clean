@@ -15,6 +15,7 @@ namespace HelloWorld.Application.Features.Handlers.ProductHandlers
         public async Task Handle(RemoveProductCommand request, CancellationToken cancellationToken)
         {
             await _productRepository.DeleteAsync(request.Id);
+            await _productRepository.SaveChangesAsync();
         }
     }
 }

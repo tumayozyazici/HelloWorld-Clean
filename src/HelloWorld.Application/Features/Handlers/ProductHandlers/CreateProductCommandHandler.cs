@@ -18,6 +18,7 @@ namespace HelloWorld.Application.Features.Handlers.ProductHandlers
             Product product = new();
             product=request.Adapt<Product>();
             await _productRepository.CreateAsync(product);
+            await _productRepository.SaveChangesAsync();
         }
     }
 }

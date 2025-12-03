@@ -15,12 +15,12 @@ namespace HelloWorld.Domain.Entities
             OrderProducts = new HashSet<OrderProduct>();
         }
 
-        public DateTimeOffset OrderDate { get; set; }
-        public decimal TotalAmount { get; set; }
+        public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.UtcNow;
+        public decimal TotalAmount { get; set; } = 0;
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
 
 
-        public HashSet<OrderProduct>? OrderProducts { get; set; }
+        public IEnumerable<OrderProduct>? OrderProducts { get; set; }
         public string? UserId { get; set; }
         public User? User { get; set; }
     }

@@ -19,6 +19,7 @@ namespace HelloWorld.Application.Features.Handlers.UserHandlers
             user = request.Adapt<User>();
             user.SetPassword(request.Password);
             await _userRepository.CreateAsync(user);
+            await _userRepository.SaveChangesAsync();
         }
     }
 }
