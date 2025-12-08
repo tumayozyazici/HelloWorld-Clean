@@ -2,6 +2,7 @@
 using HelloWorld.Application.Features.Commands.ProductCommands;
 using HelloWorld.Application.Features.Commands.UserCommands;
 using HelloWorld.Application.Features.Queries.UserQueries;
+using HelloWorld.Application.Features.Results.BasketResults;
 using HelloWorld.Application.Features.Results.CategoryResults;
 using HelloWorld.Application.Features.Results.ProductResults;
 using HelloWorld.Application.Features.Results.UserResults;
@@ -103,6 +104,18 @@ namespace HelloWorld.Application.Mapping
                 {
                     CategoryName =  category.CategoryName
                 }));
+
+
+            //BasketMappings
+            TypeAdapterConfig<Basket, GetBasketByUserIdQueryResult>.NewConfig()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.UserId, src => src.UserId)
+                .Map(dest => dest.BasketItems, src => src.BasketItems);
+
+            TypeAdapterConfig<Basket, GetBasketByIdQueryResult>.NewConfig()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.UserId, src => src.UserId)
+                .Map(dest => dest.BasketItems, src => src.BasketItems);
         }
     }
 }

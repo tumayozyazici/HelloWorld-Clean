@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.Domain.Entities
 {
-    public class OrderProduct : BaseEntity
+    public class BasketItem : BaseEntity
     {
-        public string OrderId { get; set; }
-        public Order Order { get; set; }
         public string ProductId { get; set; }
-        public Product Product { get; set; }
+        public int Quantity { get; set; }
+
+
+        public string BasketId { get; set; }
+        public Basket Basket { get; set; }
     }
 }

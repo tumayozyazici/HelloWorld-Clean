@@ -10,28 +10,46 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.Application.Features.Handlers.OrderHandlers
 {
-    public class CreateOrderCommandHandler(IRepository<Order> _orderRepository, IRepository<OrderProduct> _orderProductRepository) : IRequestHandler<CreateOrderCommand>
+    public class CreateOrderCommandHandler(
+        IRepository<Order> _orderRepository,
+        IRepository<OrderProduct> _orderProductRepository,
+        IRepository<Basket> _basketRepository,
+        IRepository<BasketItem> _basketItemRepository,
+        IRepository<Product> _productRepository) : IRequestHandler<CreateOrderCommand>
     {
         public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            var order = new Order();
-            var orderProducts = new List<OrderProduct>();
+            var basket = await _basketRepository.GetByFilterASync(x => x.UserId == request.UserId);
+            if (basket is null) throw new Exception("Sepet bulunamadı.");
 
-            foreach (var item in request.Products)
+            var basketItems = await _basketItemRepository.GetListByFilterAsync(x => x.BasketId == basket.Id);
+            if (!basketItems.Any()) throw new Exception("Sepetinizde ürün bulunamadı.");
+
+            var order = new Order
             {
-                orderProducts.Add(new OrderProduct
+                UserId = request.UserId,
+                TotalAmount = 0
+            };
+            await _orderRepository.CreateAsync(order);
+
+            foreach (var item in basketItems)
+            {
+                var product = await _productRepository.GetByIdAsync(item.ProductId);
+                if (product is null) throw new Exception($"Ürün bulunamadı. Ürün Id={item.Id}");
+
+                order.TotalAmount += product.Price * item.Quantity;
+
+                var orderProduct = new OrderProduct
                 {
-                    ProductId = item.Id,
                     OrderId = order.Id,
-                });
-                order.TotalAmount += item.Price;
+                    ProductId = product.Id
+                };
+
+                await _orderProductRepository.CreateAsync(orderProduct);
             }
 
-            order.OrderProducts = orderProducts; 
-            order.UserId = request.UserId;
-
-            await _orderRepository.CreateAsync(order);
-            await _orderProductRepository.CreateRangeAsync(orderProducts);
+            //Burayı HardDelete'e çevirebiliriz.
+            _basketItemRepository.DeleteRange(basketItems);
             await _orderRepository.SaveChangesAsync();
         }
     }

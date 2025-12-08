@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.Application.Auth
 {
-    public record LoginCommand(string username , string password) : IRequest<string>;
+    public record LoginCommand(string usernameOrEmail , string password) : IRequest<string>;
     public class LoginCommandHandler(IRepository<User> _userRepository,IJwtProvider _jwtProvider) : IRequestHandler<LoginCommand, string>
     {
         public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByFilterASync(x => x.UserName == request.username);
-            if (user is null) return "Kullanıcı adı veya şifre geçersiz.";
+            var user = await _userRepository.GetByFilterASync(x => x.UserName == request.usernameOrEmail || x.Email == request.usernameOrEmail);
+            if (user is null) return "Kullanıcı bilgileri veya şifre geçersiz.";
 
             var isPasswordValid = user.VerifyPassword(request.password);
-            if (!isPasswordValid) return "Kullanıcı adı veya şifre geçersiz.";
+            if (!isPasswordValid) return "Kullanıcı bilgileri veya şifre geçersiz.";
 
             var token = _jwtProvider.GenerateToken(user);
 
