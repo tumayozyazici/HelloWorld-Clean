@@ -14,7 +14,7 @@ namespace HelloWorld.Application.Features.Handlers.BasketHandlers
     {
         public async Task Handle(CreateBasketItemCommand request, CancellationToken cancellationToken)
         {
-            var basket = await _basketRepository.GetByFilterASync(x => x.UserId == request.UserId);
+            var basket = await _basketRepository.GetByFilterAsync(x => x.UserId == request.UserId);
 
             if (basket is null)
             {
@@ -27,7 +27,7 @@ namespace HelloWorld.Application.Features.Handlers.BasketHandlers
             await _basketRepository.CreateAsync(basket);
             await _basketRepository.SaveChangesAsync();
 
-            var existingItem = await _basketItemRepository.GetByFilterASync(x => x.BasketId == basket.Id && x.ProductId == request.ProductId);
+            var existingItem = await _basketItemRepository.GetByFilterAsync(x => x.BasketId == basket.Id && x.ProductId == request.ProductId);
 
             if (existingItem is not null)
             {

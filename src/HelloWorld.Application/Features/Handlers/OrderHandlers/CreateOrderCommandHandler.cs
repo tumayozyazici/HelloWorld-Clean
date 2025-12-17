@@ -19,7 +19,7 @@ namespace HelloWorld.Application.Features.Handlers.OrderHandlers
     {
         public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            var basket = await _basketRepository.GetByFilterASync(x => x.UserId == request.UserId);
+            var basket = await _basketRepository.GetByFilterAsync(x => x.UserId == request.UserId);
             if (basket is null) throw new Exception("Sepet bulunamadı.");
 
             var basketItems = await _basketItemRepository.GetListByFilterAsync(x => x.BasketId == basket.Id);

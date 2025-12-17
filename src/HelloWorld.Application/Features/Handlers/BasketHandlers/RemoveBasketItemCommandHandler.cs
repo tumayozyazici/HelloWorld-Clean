@@ -14,10 +14,10 @@ namespace HelloWorld.Application.Features.Handlers.BasketHandlers
     {
         public async Task Handle(RemoveBasketItemCommand request, CancellationToken cancellationToken)
         {
-            var basket = await _basketRepository.GetByFilterASync(x => x.UserId == request.UserId);
+            var basket = await _basketRepository.GetByFilterAsync(x => x.UserId == request.UserId);
             if (basket is null) return;
 
-            var existingItem = await _basketItemRepository.GetByFilterASync(x => x.BasketId == basket.Id && x.ProductId == request.ProductId);
+            var existingItem = await _basketItemRepository.GetByFilterAsync(x => x.BasketId == basket.Id && x.ProductId == request.ProductId);
             if (existingItem is null) return;
 
             existingItem.Quantity -= request.Quantity;

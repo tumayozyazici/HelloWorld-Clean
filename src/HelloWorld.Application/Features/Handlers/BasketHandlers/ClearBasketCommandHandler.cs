@@ -14,7 +14,7 @@ namespace HelloWorld.Application.Features.Handlers.BasketHandlers
     {
         public async Task Handle(ClearBasketCommand request, CancellationToken cancellationToken)
         {
-            var basket = await _basketRepository.GetByFilterASync(x => x.UserId == request.UserId);
+            var basket = await _basketRepository.GetByFilterAsync(x => x.UserId == request.UserId);
             if (basket is null) return;
 
             var items = await _basketItemRepository.GetListByFilterAsync(x => x.BasketId == basket.Id);

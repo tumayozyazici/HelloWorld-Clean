@@ -12,7 +12,7 @@ namespace HelloWorld.Application.Interfaces
     {
         Task<T> GetByIdAsync(string id);
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetByFilterASync(Expression<Func<T, bool>> filter);
+        Task<T> GetByFilterAsync(Expression<Func<T, bool>> filter);
         Task<IEnumerable<T>> GetListByFilterAsync(Expression<Func<T, bool>> filter);
         Task<T> GetByFilterWithIncludeAsync(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes);
         Task CreateAsync(T entity);

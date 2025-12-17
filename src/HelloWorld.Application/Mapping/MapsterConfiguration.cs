@@ -78,8 +78,19 @@ namespace HelloWorld.Application.Mapping
                 .Map(dest => dest.InStock, src => src.InStock)
                 .Map(dest => dest.Price, src => src.Price)
                 .Map(dest => dest.CategoryId, src => src.CategoryId);
+
             TypeAdapterConfig<IEnumerable<Product>, IEnumerable<GetProductsQueryResult>>.NewConfig()
                 .Map(dest => dest, src => src.Select(product => new GetProductsQueryResult
+                {
+                    Id = product.Id,
+                    ProductName = product.ProductName,
+                    InStock = product.InStock,
+                    Price = product.Price,
+                    CategoryId = product.CategoryId
+                }));
+
+            TypeAdapterConfig<IEnumerable<Product>, IEnumerable<GetProductsByCategoryIdQueryResult>>.NewConfig()
+                .Map(dest => dest, src => src.Select(product => new GetProductsByCategoryIdQueryResult
                 {
                     Id = product.Id,
                     ProductName = product.ProductName,

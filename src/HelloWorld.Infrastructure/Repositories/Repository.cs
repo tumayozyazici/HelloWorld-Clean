@@ -52,7 +52,7 @@ namespace HelloWorld.Infrastructure.Repositories
             return await _context.Set<T>().Where(e => e.Status != EntityStatus.Deleted).ToListAsync();
         }
 
-        public async Task<T> GetByFilterASync(Expression<Func<T, bool>> filter)
+        public async Task<T> GetByFilterAsync(Expression<Func<T, bool>> filter)
         {
             return await _context.Set<T>().Where(x => x.Status != EntityStatus.Deleted).FirstOrDefaultAsync(filter);
         }

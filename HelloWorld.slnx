@@ -3,6 +3,7 @@
     <Project Path="src/HelloWorld.Application/HelloWorld.Application.csproj" />
     <Project Path="src/HelloWorld.Domain/HelloWorld.Domain.csproj" />
     <Project Path="src/HelloWorld.Infrastructure/HelloWorld.Infrastructure.csproj" />
+    <Project Path="src/HelloWorld.UI/HelloWorld.UI.csproj" Id="9a009c51-484e-419f-8b65-a106dc3cdd29" />
     <Project Path="src/HelloWorld.WebAPI/HelloWorld.WebAPI.csproj" />
   </Folder>
   <Folder Name="/test/" />

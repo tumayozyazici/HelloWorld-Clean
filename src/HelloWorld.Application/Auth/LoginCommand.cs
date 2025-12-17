@@ -15,7 +15,7 @@ namespace HelloWorld.Application.Auth
     {
         public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByFilterASync(x => x.UserName == request.usernameOrEmail || x.Email == request.usernameOrEmail);
+            var user = await _userRepository.GetByFilterAsync(x => x.UserName == request.usernameOrEmail || x.Email == request.usernameOrEmail);
             if (user is null) return "Kullanıcı bilgileri veya şifre geçersiz.";
 
             var isPasswordValid = user.VerifyPassword(request.password);

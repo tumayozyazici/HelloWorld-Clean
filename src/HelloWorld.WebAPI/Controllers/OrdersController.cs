@@ -40,13 +40,6 @@ namespace HelloWorld.WebAPI.Controllers
             return Ok("Sipariş Başarıyla Oluşturuldu");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateOrder(UpdateOrderCommand command)
-        {
-            await _mediator.Send(command);
-            return Ok("Sipariş Başarıyla Güncellendi");
-        }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(string id)
         {

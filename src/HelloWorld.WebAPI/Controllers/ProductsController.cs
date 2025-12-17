@@ -26,6 +26,14 @@ namespace HelloWorld.WebAPI.Controllers
             return Ok(products);
         }
 
+        [HttpGet("GetProductsByCategoryId/{categoryId}")]
+        public async Task<IActionResult> GetProductsByCategoryId(string categoryId)
+        {
+            var products = await _mediator.Send(new GetProductsByCategoryIdQuery(categoryId));
+            if (!products.Any()) return NotFound("Hiç Ürün Bulunamadı.");
+            return Ok(products);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById(string id)
         {

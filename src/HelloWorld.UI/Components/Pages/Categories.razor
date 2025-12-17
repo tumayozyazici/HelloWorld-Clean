@@ -1,0 +1,36 @@
+﻿@page "/categories"
+@using HelloWorld.Application.Features.Results.CategoryResults
+@inject HttpClient Http
+
+Here are some categories.
+
+@if (CategoryResults == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="d-flex p-2">
+        @foreach (var category in CategoryResults)
+        {
+            <div class="card m-2" style="width: 18rem;">
+                <img src="/visuals/blank.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@category.CategoryName</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="/categoryproducts/@category.Id" class="btn btn-primary">Ürünleri İncele..</a>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+
+    public List<GetCategoriesQueryResult>? CategoryResults { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        CategoryResults = await Http.GetFromJsonAsync<List<GetCategoriesQueryResult>>("http://localhost:5282/api/Categories");
+    }
+}
