@@ -15,6 +15,7 @@ namespace HelloWorld.Application.Features.Commands.ProductCommands
         public int InStock { get; set; }
         public string? CategoryId { get; set; }
         public string Status { get; set; }
+        public string Description { get; set; }
 
     }
 }

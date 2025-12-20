@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.Application.Features.Queries.ProductQueries
 {
-    public class GetProductsByCategoryIdQuery : IRequest<IEnumerable<GetProductsByCategoryIdQueryResult>>
+    public class GetProductsByCategoryIdQuery : IRequest<IEnumerable<GetProductsQueryResult>>
     {
         public string CategoryId { get; set; }
 

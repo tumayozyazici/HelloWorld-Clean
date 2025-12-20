@@ -8,11 +8,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HelloWorld.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class mg1 : Migration
+    public partial class initialmig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Baskets",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Baskets", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -59,11 +78,39 @@ namespace HelloWorld.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BasketItems",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProductId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    BasketId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BasketItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BasketItems_Baskets_BasketId",
+                        column: x => x.BasketId,
+                        principalTable: "Baskets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     InStock = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -149,23 +196,28 @@ namespace HelloWorld.Infrastructure.Migrations
                 columns: new[] { "Id", "CategoryName", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "Status", "UpdatedAt", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { "1", "Elektronik", new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 969, DateTimeKind.Unspecified).AddTicks(1677), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 0, null, null },
-                    { "2", "Kitap", new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 969, DateTimeKind.Unspecified).AddTicks(2610), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 0, null, null },
-                    { "3", "Giyim", new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 969, DateTimeKind.Unspecified).AddTicks(2619), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 0, null, null }
+                    { "1", "Elektronik", new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 7, DateTimeKind.Unspecified).AddTicks(8665), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 0, null, null },
+                    { "2", "Kitap", new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 7, DateTimeKind.Unspecified).AddTicks(9623), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 0, null, null },
+                    { "3", "Giyim", new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 7, DateTimeKind.Unspecified).AddTicks(9631), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 0, null, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CategoryId", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "InStock", "Price", "ProductName", "Status", "UpdatedAt", "UpdatedBy" },
+                columns: new[] { "Id", "CategoryId", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "Description", "InStock", "Price", "ProductName", "Status", "UpdatedAt", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { "1", "1", new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(100), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 100, 19.99m, "Bilgisayar", 0, null, null },
-                    { "2", "1", new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(1395), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 150, 29.99m, "Elektrik Süpürgesi", 0, null, null },
-                    { "3", "2", new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(1404), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 200, 9.99m, "Körlük", 0, null, null },
-                    { "4", "2", new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(1409), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 250, 14.99m, "Dijital Kale", 0, null, null },
-                    { "5", "3", new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(1414), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 300, 49.99m, "Memelik", 0, null, null },
-                    { "6", "3", new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(1425), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, 350, 99.99m, "Boxer", 0, null, null }
+                    { "1", "1", new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(4881), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, "Güçlü bir bilgisayar", 100, 19.99m, "Bilgisayar", 0, null, null },
+                    { "2", "1", new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(6434), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, "Etkili temizlik için", 150, 29.99m, "Elektrik Süpürgesi", 0, null, null },
+                    { "3", "2", new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(6443), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, "Görmeyi engelleyen bir ürün", 200, 9.99m, "Körlük", 0, null, null },
+                    { "4", "2", new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(6464), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, "Güvenlik için dijital çözüm", 250, 14.99m, "Dijital Kale", 0, null, null },
+                    { "5", "3", new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(6469), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, "Konforlu ve şık", 300, 49.99m, "Memelik", 0, null, null },
+                    { "6", "3", new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(6474), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, "Rahat ve dayanıklı", 350, 99.99m, "Boxer", 0, null, null }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BasketItems_BasketId",
+                table: "BasketItems",
+                column: "BasketId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProducts_OrderId",
@@ -192,7 +244,13 @@ namespace HelloWorld.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "BasketItems");
+
+            migrationBuilder.DropTable(
                 name: "OrderProducts");
+
+            migrationBuilder.DropTable(
+                name: "Baskets");
 
             migrationBuilder.DropTable(
                 name: "Orders");

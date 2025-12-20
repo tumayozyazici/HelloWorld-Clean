@@ -1,6 +1,7 @@
 ﻿@page "/categoryproducts/{CategoryId}"
 @using HelloWorld.Application.Features.Results.ProductResults
 @inject HttpClient Http
+@rendermode InteractiveServer
 
 <h3>Seçilen kategorinin ürünleri</h3>
 
@@ -13,30 +14,46 @@ else
     <div class="d-flex flex-wrap">
         @foreach (var product in Products)
         {
-            <div class="card m-2" style="width: 18rem;">
-                <img src="/visuals/blank.jpg" class="card-img-top" />
-                <div class="card-body">
-                    <h5 class="card-title">@product.ProductName</h5>
-                    <p class="card-text">Ücreti: @product.Price</p>
-                    <p class="card-text">Stok: @product.InStock</p>
-                    <div class="d-flex flex-wrap gap-4">
-                        <a href="" class="btn btn-secondary">Ürün Detayı</a>
-                        <a href="" class="btn btn-primary">Sepete Ekle</a>
-                    </div>
-                </div>
-            </div>
+            <ProductCard Product="product"
+                         OnAddToCart="AddToCart"
+                         OnDetail="OpenDetailModal" />
         }
     </div>
+    <ProductDetailModal Product="SelectedProduct"
+                        IsOpen="IsModalOpen"
+                        OnClose="CloseDetailModal"
+                        OnAddToCart="AddToCart" />
 }
 
 @code {
     [Parameter]
     public string CategoryId { get; set; }
 
-    public List<GetProductsByCategoryIdQueryResult> Products { get; set; }
+    public List<GetProductsQueryResult> Products { get; set; }
+
+    GetProductsQueryResult? SelectedProduct;
+    public bool IsModalOpen { get; set; }
+
+    public void OpenDetailModal(string Id)
+    {
+        IsModalOpen = true;
+        SelectedProduct = Products?.FirstOrDefault(x => x.Id == Id);
+        StateHasChanged();
+    }
+
+    public void CloseDetailModal()
+    {
+        IsModalOpen = false;
+    }
+
+    void AddToCart(GetProductsQueryResult product)
+    {
+        // Basket logic
+        Console.WriteLine($"{product.ProductName} sepete eklendi");
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        Products = await Http.GetFromJsonAsync<List<GetProductsByCategoryIdQueryResult>>($"http://localhost:5282/api/Products/GetProductsByCategoryId/{CategoryId}");
+        Products = await Http.GetFromJsonAsync<List<GetProductsQueryResult>>($"http://localhost:5282/api/Products/GetProductsByCategoryId/{CategoryId}");
     }
 }

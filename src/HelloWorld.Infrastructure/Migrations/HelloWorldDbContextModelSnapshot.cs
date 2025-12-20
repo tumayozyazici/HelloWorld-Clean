@@ -22,6 +22,85 @@ namespace HelloWorld.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("HelloWorld.Domain.Entities.Basket", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Baskets");
+                });
+
+            modelBuilder.Entity("HelloWorld.Domain.Entities.BasketItem", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BasketId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasketId");
+
+                    b.ToTable("BasketItems");
+                });
+
             modelBuilder.Entity("HelloWorld.Domain.Entities.Category", b =>
                 {
                     b.Property<string>("Id")
@@ -61,21 +140,21 @@ namespace HelloWorld.Infrastructure.Migrations
                         {
                             Id = "1",
                             CategoryName = "Elektronik",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 969, DateTimeKind.Unspecified).AddTicks(1677), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 7, DateTimeKind.Unspecified).AddTicks(8665), new TimeSpan(0, 0, 0, 0, 0)),
                             Status = 0
                         },
                         new
                         {
                             Id = "2",
                             CategoryName = "Kitap",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 969, DateTimeKind.Unspecified).AddTicks(2610), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 7, DateTimeKind.Unspecified).AddTicks(9623), new TimeSpan(0, 0, 0, 0, 0)),
                             Status = 0
                         },
                         new
                         {
                             Id = "3",
                             CategoryName = "Giyim",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 969, DateTimeKind.Unspecified).AddTicks(2619), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 7, DateTimeKind.Unspecified).AddTicks(9631), new TimeSpan(0, 0, 0, 0, 0)),
                             Status = 0
                         });
                 });
@@ -188,6 +267,10 @@ namespace HelloWorld.Infrastructure.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("InStock")
                         .HasColumnType("int");
 
@@ -218,7 +301,8 @@ namespace HelloWorld.Infrastructure.Migrations
                         {
                             Id = "1",
                             CategoryId = "1",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(100), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(4881), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "Güçlü bir bilgisayar",
                             InStock = 100,
                             Price = 19.99m,
                             ProductName = "Bilgisayar",
@@ -228,7 +312,8 @@ namespace HelloWorld.Infrastructure.Migrations
                         {
                             Id = "2",
                             CategoryId = "1",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(1395), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(6434), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "Etkili temizlik için",
                             InStock = 150,
                             Price = 29.99m,
                             ProductName = "Elektrik Süpürgesi",
@@ -238,7 +323,8 @@ namespace HelloWorld.Infrastructure.Migrations
                         {
                             Id = "3",
                             CategoryId = "2",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(1404), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(6443), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "Görmeyi engelleyen bir ürün",
                             InStock = 200,
                             Price = 9.99m,
                             ProductName = "Körlük",
@@ -248,7 +334,8 @@ namespace HelloWorld.Infrastructure.Migrations
                         {
                             Id = "4",
                             CategoryId = "2",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(1409), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(6464), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "Güvenlik için dijital çözüm",
                             InStock = 250,
                             Price = 14.99m,
                             ProductName = "Dijital Kale",
@@ -258,7 +345,8 @@ namespace HelloWorld.Infrastructure.Migrations
                         {
                             Id = "5",
                             CategoryId = "3",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(1414), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(6469), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "Konforlu ve şık",
                             InStock = 300,
                             Price = 49.99m,
                             ProductName = "Memelik",
@@ -268,7 +356,8 @@ namespace HelloWorld.Infrastructure.Migrations
                         {
                             Id = "6",
                             CategoryId = "3",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 30, 12, 7, 55, 974, DateTimeKind.Unspecified).AddTicks(1425), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 17, 21, 3, 3, 11, DateTimeKind.Unspecified).AddTicks(6474), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "Rahat ve dayanıklı",
                             InStock = 350,
                             Price = 99.99m,
                             ProductName = "Boxer",
@@ -336,6 +425,17 @@ namespace HelloWorld.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("HelloWorld.Domain.Entities.BasketItem", b =>
+                {
+                    b.HasOne("HelloWorld.Domain.Entities.Basket", "Basket")
+                        .WithMany("BasketItems")
+                        .HasForeignKey("BasketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basket");
+                });
+
             modelBuilder.Entity("HelloWorld.Domain.Entities.Order", b =>
                 {
                     b.HasOne("HelloWorld.Domain.Entities.User", "User")
@@ -371,6 +471,11 @@ namespace HelloWorld.Infrastructure.Migrations
                         .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("HelloWorld.Domain.Entities.Basket", b =>
+                {
+                    b.Navigation("BasketItems");
                 });
 
             modelBuilder.Entity("HelloWorld.Domain.Entities.Category", b =>

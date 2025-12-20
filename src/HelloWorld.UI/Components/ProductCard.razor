@@ -1,0 +1,44 @@
+﻿@rendermode InteractiveServer
+@using HelloWorld.Application.Features.Results.ProductResults
+
+<div class="card m-2" style="width: 18rem;">
+    <img src="/visuals/blank.jpg" class="card-img-top" />
+
+    <div class="card-body">
+        <h5 class="card-title">@Product.ProductName</h5>
+
+        <p class="card-text">Ücreti: @Product.Price ₺</p>
+        <p class="card-text">Stok: @Product.InStock</p>
+
+        <div class="d-flex flex-wrap gap-4">
+            <button class="btn btn-secondary" @onclick="OnDetailClicked">
+                Ürün Detayı
+            </button>
+
+            <button class="btn btn-primary" @onclick="OnAddToCartClicked">
+                Sepete Ekle
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public GetProductsQueryResult Product { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<GetProductsQueryResult> OnAddToCart { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnDetail { get; set; }
+
+    public async Task OnAddToCartClicked()
+    {
+        await OnAddToCart.InvokeAsync(Product);
+    }
+
+    public async Task OnDetailClicked()
+    {
+        await OnDetail.InvokeAsync(Product.Id);
+    }
+}

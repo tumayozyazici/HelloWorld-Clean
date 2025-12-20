@@ -35,7 +35,7 @@ namespace HelloWorld.Application.Mapping
                 .Map(dest => dest.BillingAdress, src => src.BillingAdress)
                 .IgnoreNullValues(true);
 
-            TypeAdapterConfig<User,GetUserByIdQueryResult>.NewConfig()
+            TypeAdapterConfig<User, GetUserByIdQueryResult>.NewConfig()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.UserName, src => src.UserName)
                 .Map(dest => dest.Email, src => src.Email)
@@ -45,7 +45,7 @@ namespace HelloWorld.Application.Mapping
                 .Map(dest => dest.Status, src => src.Status.ToString())
                 .IgnoreNullValues(true);
 
-            TypeAdapterConfig<IEnumerable<User>,IEnumerable<GetUsersQueryResult>>.NewConfig()
+            TypeAdapterConfig<IEnumerable<User>, IEnumerable<GetUsersQueryResult>>.NewConfig()
                 .Map(dest => dest, src => src.Select(user => new GetUsersQueryResult
                 {
                     Id = user.Id,
@@ -64,12 +64,14 @@ namespace HelloWorld.Application.Mapping
                 .Map(dest => dest.ProductName, src => src.ProductName)
                 .Map(dest => dest.InStock, src => src.InStock)
                 .Map(dest => dest.Price, src => src.Price)
-                .Map(dest => dest.CategoryId, src => src.CategoryId);
+                .Map(dest => dest.CategoryId, src => src.CategoryId)
+                .Map(dest => dest.Description, src => src.Description);
 
             TypeAdapterConfig<UpdateProductCommand, Product>.NewConfig()
                 .Map(dest => dest.ProductName, src => src.ProductName)
                 .Map(dest => dest.InStock, src => src.InStock)
                 .Map(dest => dest.Price, src => src.Price)
+                .Map(dest => dest.CategoryId, src => src.CategoryId)
                 .Map(dest => dest.CategoryId, src => src.CategoryId);
 
             TypeAdapterConfig<Product, GetProductByIdQueryResult>.NewConfig()
@@ -77,7 +79,8 @@ namespace HelloWorld.Application.Mapping
                 .Map(dest => dest.ProductName, src => src.ProductName)
                 .Map(dest => dest.InStock, src => src.InStock)
                 .Map(dest => dest.Price, src => src.Price)
-                .Map(dest => dest.CategoryId, src => src.CategoryId);
+                .Map(dest => dest.CategoryId, src => src.CategoryId)
+                .Map(dest => dest.Description, src => src.Description);
 
             TypeAdapterConfig<IEnumerable<Product>, IEnumerable<GetProductsQueryResult>>.NewConfig()
                 .Map(dest => dest, src => src.Select(product => new GetProductsQueryResult
@@ -86,17 +89,8 @@ namespace HelloWorld.Application.Mapping
                     ProductName = product.ProductName,
                     InStock = product.InStock,
                     Price = product.Price,
-                    CategoryId = product.CategoryId
-                }));
-
-            TypeAdapterConfig<IEnumerable<Product>, IEnumerable<GetProductsByCategoryIdQueryResult>>.NewConfig()
-                .Map(dest => dest, src => src.Select(product => new GetProductsByCategoryIdQueryResult
-                {
-                    Id = product.Id,
-                    ProductName = product.ProductName,
-                    InStock = product.InStock,
-                    Price = product.Price,
-                    CategoryId = product.CategoryId
+                    CategoryId = product.CategoryId,
+                    Description = product.Description
                 }));
 
 
@@ -107,13 +101,13 @@ namespace HelloWorld.Application.Mapping
             TypeAdapterConfig<UpdateCategoryCommand, Category>.NewConfig()
                 .Map(dest => dest.CategoryName, src => src.CategoryName);
 
-            TypeAdapterConfig<Category,GetCategoryByIdQueryResult>.NewConfig()
+            TypeAdapterConfig<Category, GetCategoryByIdQueryResult>.NewConfig()
                 .Map(dest => dest.CategoryName, src => src.CategoryName);
 
             TypeAdapterConfig<IEnumerable<Category>, IEnumerable<GetCategoriesQueryResult>>.NewConfig()
                 .Map(dest => dest, src => src.Select(category => new GetCategoriesQueryResult
                 {
-                    CategoryName =  category.CategoryName
+                    CategoryName = category.CategoryName
                 }));
 
 

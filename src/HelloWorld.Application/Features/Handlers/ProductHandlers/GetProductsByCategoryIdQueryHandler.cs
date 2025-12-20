@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.Application.Features.Handlers.ProductHandlers
 {
-    public class GetProductsByCategoryIdQueryHandler(IRepository<Product> _productRepository) : IRequestHandler<GetProductsByCategoryIdQuery, IEnumerable<GetProductsByCategoryIdQueryResult>>
+    public class GetProductsByCategoryIdQueryHandler(IRepository<Product> _productRepository) : IRequestHandler<GetProductsByCategoryIdQuery, IEnumerable<GetProductsQueryResult>>
     {
-        public async Task<IEnumerable<GetProductsByCategoryIdQueryResult>> Handle(GetProductsByCategoryIdQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GetProductsQueryResult>> Handle(GetProductsByCategoryIdQuery request, CancellationToken cancellationToken)
         {
             var products = await _productRepository.GetListByFilterAsync(x => x.CategoryId == request.CategoryId);
 
-            return products.Adapt<IEnumerable<GetProductsByCategoryIdQueryResult>>();
+            return products.Adapt<IEnumerable<GetProductsQueryResult>>();
         }
     }
 }
