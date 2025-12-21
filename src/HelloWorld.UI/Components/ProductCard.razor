@@ -1,5 +1,4 @@
 ﻿@rendermode InteractiveServer
-@using HelloWorld.Application.Features.Results.ProductResults
 
 <div class="card m-2" style="width: 18rem;">
     <img src="/visuals/blank.jpg" class="card-img-top" />
@@ -24,10 +23,10 @@
 
 @code {
     [Parameter, EditorRequired]
-    public GetProductsQueryResult Product { get; set; } = default!;
+    public ProductDto Product { get; set; } = default!;
 
     [Parameter]
-    public EventCallback<GetProductsQueryResult> OnAddToCart { get; set; }
+    public EventCallback<ProductDto> OnAddToCart { get; set; }
 
     [Parameter]
     public EventCallback<string> OnDetail { get; set; }

@@ -1,5 +1,4 @@
-﻿@using HelloWorld.Application.Features.Results.ProductResults
-@rendermode InteractiveServer
+﻿@rendermode InteractiveServer
 @if (IsOpen)
 {
 <div class="modal-backdrop fade show"></div>
@@ -41,13 +40,13 @@
 
 @code {
     [Parameter]
-    public GetProductsQueryResult? Product { get; set; }
+    public ProductDto? Product { get; set; }
 
     [Parameter]
     public bool IsOpen { get; set; }
 
     [Parameter]
-    public EventCallback<GetProductsQueryResult> OnAddToCart { get; set; }
+    public EventCallback<ProductDto> OnAddToCart { get; set; }
 
     [Parameter]
     public EventCallback OnClose { get; set; }

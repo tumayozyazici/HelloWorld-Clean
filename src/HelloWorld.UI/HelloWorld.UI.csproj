@@ -10,8 +10,4 @@
     <PackageReference Include="Blazor.Bootstrap" Version="3.5.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\HelloWorld.Application\HelloWorld.Application.csproj" />
-  </ItemGroup>
-
 </Project>

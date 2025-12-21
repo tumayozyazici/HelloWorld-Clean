@@ -1,5 +1,4 @@
 ﻿@page "/categoryproducts/{CategoryId}"
-@using HelloWorld.Application.Features.Results.ProductResults
 @inject HttpClient Http
 @rendermode InteractiveServer
 
@@ -29,9 +28,10 @@ else
     [Parameter]
     public string CategoryId { get; set; }
 
-    public List<GetProductsQueryResult> Products { get; set; }
+    public List<ProductDto> Products { get; set; }
 
-    GetProductsQueryResult? SelectedProduct;
+    ProductDto? SelectedProduct;
+
     public bool IsModalOpen { get; set; }
 
     public void OpenDetailModal(string Id)
@@ -46,7 +46,7 @@ else
         IsModalOpen = false;
     }
 
-    void AddToCart(GetProductsQueryResult product)
+    void AddToCart(ProductDto product)
     {
         // Basket logic
         Console.WriteLine($"{product.ProductName} sepete eklendi");
@@ -54,6 +54,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Products = await Http.GetFromJsonAsync<List<GetProductsQueryResult>>($"http://localhost:5282/api/Products/GetProductsByCategoryId/{CategoryId}");
+        Products = await Http.GetFromJsonAsync<List<ProductDto>>($"http://localhost:5282/api/Products/GetProductsByCategoryId/{CategoryId}");
     }
 }

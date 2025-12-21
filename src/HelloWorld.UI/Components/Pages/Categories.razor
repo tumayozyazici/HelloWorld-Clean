@@ -1,16 +1,15 @@
 ﻿@page "/categories"
-@using HelloWorld.Application.Features.Results.CategoryResults
 @inject HttpClient Http
 
 Here are some categories.
 
-@if (CategoryResults == null)
+@if (CategoryResults is null)
 {
-    <p><em>Loading...</em></p>
+    <p>Loading...</p>
 }
 else
 {
-    <div class="d-flex p-2">
+<div class="d-flex p-2">
         @foreach (var category in CategoryResults)
         {
             <div class="card m-2" style="width: 18rem;">
@@ -27,10 +26,10 @@ else
 
 @code {
 
-    public List<GetCategoriesQueryResult>? CategoryResults { get; set; }
+    public List<CategoryDto>? CategoryResults { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        CategoryResults = await Http.GetFromJsonAsync<List<GetCategoriesQueryResult>>("http://localhost:5282/api/Categories");
+        CategoryResults = await Http.GetFromJsonAsync<List<CategoryDto>>("http://localhost:5282/api/Categories");
     }
 }
